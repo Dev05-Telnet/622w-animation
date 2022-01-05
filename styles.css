@@ -1,0 +1,101 @@
+
+    body {
+        margin: 0px;
+      }
+  
+      .fp-table {
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+        transition-timing-function: steps(2,);
+      }
+  
+      .fp-tableCell {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+      }
+  
+      .content {
+        text-align: center;
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 5em;
+        color: white;
+        display: flex;
+      }
+  
+      .w-half {
+        align-self: center;
+        width: 50%;
+      }
+  
+      .w-full {
+        width: 100%;
+      }
+  
+      .h-half {
+        height: 50%;
+      }
+  
+      .h-full {
+        height: 100%;
+      }
+  
+      .text-left {
+        text-align: left;
+      }
+  
+      .pl-1 {
+        padding-left: 1rem;
+      }
+  
+      .pl-2 {
+        padding-left: 2rem;
+      }
+  
+      .pl-3 {
+        padding-left: 3rem;
+      }
+  
+      .pl-4 {
+        padding-left: 4rem;
+      }
+  
+      .pl-5 {
+        padding-left: 5rem;
+      }
+  
+      .pl-6 {
+        padding-left: 6rem;
+      }
+  
+      .pl-7 {
+        padding-left: 7rem;
+      }
+  
+      .pl-8 {
+        padding-left: 8rem;
+      }
+  
+      .pl-9 {
+        padding-left: 9rem;
+      }
+  
+      .pl-10 {
+        padding-left: 10rem;
+        transition-timing-function: cubic-bezier(1,0,0,1);
+      }
+  
+      .fixedWrapper {
+        z-index: 100;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-color: #fff2;
+      }
+    
