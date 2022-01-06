@@ -3,10 +3,12 @@
  */
 
 // get image url for the section with frame index
-const getImageUrl = (section, index) =>
-  section <= 0 || section == 4 ?
-  `./images/Sequence_01/sh_010.00001.png` :
-  `./images/Sequence_${section.toString().padStart(2, "0")}/sh_${section
+const getImageUrl = (section, index) =>{
+  if(section <= 0 || section == 4 ){
+    return `./images/Sequence_01/sh_010.00001.png`;
+  }
+  if(section>4){section = section - 1}
+  return `./images/Sequence_${section.toString().padStart(2, "0")}/sh_${section
       .toString()
       .padStart(2, "0")}0.${index.toString().padStart(5, "0")}.png`;
 
@@ -42,7 +44,8 @@ const updateCanvas = () => {
   const width = window.innerWidth;
   canvas.width = width
   canvas.height = width * (9 / 16);
-
+  context.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
   const availablePadding = window.innerHeight - canvas.height
 
   canvas.style.marginTop = (availablePadding / 2) + "px";
