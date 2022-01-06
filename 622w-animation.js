@@ -60,7 +60,7 @@ img.onload = function () {
   context.drawImage(img, 0, 0, canvas.width, canvas.height);
 };
 
-var scrollingSpeed = 2000;
+var scrollingSpeed = 2500;
 
 /*
  * Add Entry animation
@@ -102,19 +102,27 @@ function animateInterSection(originIndex, destinationIndex, direction) {
  */
 new fullpage("#fullpage", {
   touchWrapper: document,
+  // sectionsColor:['#52afef','#349234','red','blue','green','cyan','magenta','#52afef','#349234','red','blue','green','cyan','magenta','#52afef','#349234','red','blue','green','cyan','magenta',],
   scrollingSpeed: scrollingSpeed,
   easingcss3: "steps(2, jump-none)",
   onLeave: (origin, destination, direction) => {
     animateInterSection(origin.index, destination.index, direction);
 
+    // Animate the content
+    const leftHalfOrigin = $("#leftHalf", origin.item)[0];
+    const rightHalfOrigin = $("#rightHalf", origin.item)[0];
     const leftHalfDestination = $("#leftHalf", destination.item)[0];
     const rightHalfDestination = $("#rightHalf", destination.item)[0];
 
-    const animateFromLeft = [{x: "-100",opacity: 0,}, {x: 0,opacity: 1,}, ];
-    const animateFromRight = [{x: "100",opacity: 0,}, {x: 0,opacity: 1,}, ];
-   
-    const tl = new TimelineMax({delay: scrollingSpeed / 1000 / 2,});
-    tl.fromTo(rightHalfDestination, 0.5, ...animateFromRight)
-      .fromTo(leftHalfDestination, 0.5, ...animateFromLeft);
+    var duration = scrollingSpeed / 1000 / 2;
+    var tl = gsap.timeline();
+    tl.fromTo(rightHalfOrigin, {opacity: 1}, {x:"100",opacity: 0, duration: duration});
+    tl.fromTo(rightHalfDestination, {x:"100",opacity: 0}, {x:"0",opacity: 1, duration: duration});
+
+    var tr = gsap.timeline();
+    tr.fromTo(leftHalfOrigin, {opacity: 1}, {x:"-100",opacity: 0, duration: duration});
+    tr.fromTo(leftHalfDestination, {x:"-100",opacity: 0}, {x:"0",opacity: 1, duration: duration});
+    // content animation ends here
+
   },
 });
