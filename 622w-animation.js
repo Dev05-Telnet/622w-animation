@@ -4,10 +4,10 @@
 
 // get image url for the section with frame index
 const getImageUrl = (section, index) =>{
-  if(section <= 0 || section == 4 ) return `./images/Sequence_01/sh_010.00001.png`;
+  if(section <= 0 || section == 4 ) return `https://dev05-telnet.github.io/622w-animation/images/Sequence_01/sh_010.00001.png`;
   if(section>4) section = section - 1
 
-  return `./images/Sequence_${section.toString().padStart(2, "0")}/sh_${section
+  return `https://dev05-telnet.github.io/622w-animation/images/Sequence_${section.toString().padStart(2, "0")}/sh_${section
       .toString()
       .padStart(2, "0")}0.${index.toString().padStart(5, "0")}.png`;
 }
