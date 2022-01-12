@@ -60,7 +60,7 @@ img.onload = function () {
   context.drawImage(img, 0, 0, canvas.width, canvas.height);
 };
 
-var scrollingSpeed = 2500;
+var scrollingSpeed = 2000;
 
 /*
  * Add Entry animation
@@ -104,7 +104,7 @@ new fullpage("#fullpage", {
   touchWrapper: document,
   //sectionsColor:['#52afef','#349234','red','blue','green','cyan','magenta','#52afef','#349234','red','blue','green','cyan','magenta','#52afef','#349234','red','blue','green','cyan','magenta',],
   scrollingSpeed: scrollingSpeed,
-  //easingcss3: "steps(2, jump-none)",
+  easingcss3: "steps(2, jump-none)",//"linear",
   onLeave: (origin, destination, direction) => {
     animateInterSection(origin.index, destination.index, direction);
 
@@ -114,8 +114,23 @@ new fullpage("#fullpage", {
     const leftHalfDestination = $("#leftHalf", destination.item)[0];
     const rightHalfDestination = $("#rightHalf", destination.item)[0];
 
+    console.log('leftHalfOrigin is ',leftHalfOrigin)
+    console.log('rightHalfOrigin is ',rightHalfOrigin)
+    console.log('leftHalfDestination is ',leftHalfDestination)
+    console.log('rightHalfDestination is ',rightHalfDestination)
+
     var duration = scrollingSpeed / 1000 / 2;
-    var tl = gsap.timeline();
+
+    // animate the first section
+    if(origin.isFirst){
+      gsap.timeline().fromTo(origin.item, {y:"0"}, {y:"-100vh",opacity: 1, duration: duration});
+    }else if(destination.isFirst){
+      gsap.timeline().fromTo(destination.item, {y:"-100vh",opacity: 0}, {y:"0",opacity: 1, duration: duration*2});
+    }
+    // end of first section
+
+    // animate all the content
+    var tl = gsap.timeline();        
     tl.fromTo(rightHalfOrigin, {opacity: 1}, {x:"100",opacity: 0, duration: duration});
     tl.fromTo(rightHalfDestination, {x:"100",opacity: 0}, {x:"0",opacity: 1, duration: duration});
 

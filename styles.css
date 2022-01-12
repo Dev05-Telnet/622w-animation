@@ -97,7 +97,6 @@ body {
   width: 100%;
   height: 100%;
   background-size: contain;
-  background-color: #fff2;
 }
 
 /* css for first section  */
@@ -182,7 +181,6 @@ body {
   text-align: center;
   font-family: "Source Sans Pro", sans-serif;
   font-size: 5em;
-  color: #fff2;
 }
 
 .intro {
