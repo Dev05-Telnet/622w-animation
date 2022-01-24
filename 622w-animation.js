@@ -3,11 +3,11 @@
  */
 
 // get image url for the section with frame index
-const getImageUrl = (section, index) =>{
-  if(section <= 0 || section == 4 ) return `https://dev05-telnet.github.io/622w-animation/images/Sequence_01/sh_010.00001.png`;
-  if(section>4) section = section - 1
+const getImageUrl = (section, index) => {
+  if (section <= 0 || section == 4) return `./images/Sequence_01/sh_010.00001.png`;
+  if (section > 4) section = section - 1
 
-  return `https://dev05-telnet.github.io/622w-animation/images/Sequence_${section.toString().padStart(2, "0")}/sh_${section
+  return `./images/Sequence_${section.toString().padStart(2, "0")}/sh_${section
       .toString()
       .padStart(2, "0")}0.${index.toString().padStart(5, "0")}.png`;
 }
@@ -45,7 +45,7 @@ const updateCanvas = () => {
   canvas.width = width
   canvas.height = width * (9 / 16);
   context.drawImage(img, 0, 0, canvas.width, canvas.height);
-  
+
   const availablePadding = window.innerHeight - canvas.height
 
   canvas.style.marginTop = (availablePadding / 2) + "px";
@@ -102,11 +102,25 @@ function animateInterSection(originIndex, destinationIndex, direction) {
  */
 new fullpage("#fullpage", {
   touchWrapper: document,
-  //sectionsColor:['#52afef','#349234','red','blue','green','cyan','magenta','#52afef','#349234','red','blue','green','cyan','magenta','#52afef','#349234','red','blue','green','cyan','magenta',],
+  sectionsColor:['#52afef','#349234','red','blue','green','cyan','magenta','#52afef','#349234','red','blue','green','cyan','magenta','#52afef','#349234','red','blue','green','cyan','magenta',],
   scrollingSpeed: scrollingSpeed,
-  easingcss3: "steps(2, jump-none)",//"linear",
+  // easingcss3: "steps(2, jump-none)", //"linear",
+  offsetSections: true,
+  afterLoad: (a, e, d) => {
+    if (a.index === 0 && d === null) {
+      var index = 0;
+      var interval = setInterval(function () {
+        index++;
+        if (index < 15) {
+          img.src = getImageUrl(1, index)
+        } else if (index > 15) {
+          clearInterval(interval);
+        }
+      }, scrollingSpeed / 30);
+    }
+  },
   onLeave: (origin, destination, direction) => {
-    animateInterSection(origin.index, destination.index, direction);
+    animateInterSection(origin.index + 1, destination.index + 1, direction);
 
     // Animate the content
     const leftHalfOrigin = $("#leftHalf", origin.item)[0];
@@ -114,23 +128,10 @@ new fullpage("#fullpage", {
     const leftHalfDestination = $("#leftHalf", destination.item)[0];
     const rightHalfDestination = $("#rightHalf", destination.item)[0];
 
-    console.log('leftHalfOrigin is ',leftHalfOrigin)
-    console.log('rightHalfOrigin is ',rightHalfOrigin)
-    console.log('leftHalfDestination is ',leftHalfDestination)
-    console.log('rightHalfDestination is ',rightHalfDestination)
-
     var duration = scrollingSpeed / 1000 / 2;
 
-    // animate the first section
-    if(origin.isFirst){
-      gsap.timeline().fromTo(origin.item, {y:"0"}, {y:"-100vh",opacity: 1, duration: duration});
-    }else if(destination.isFirst){
-      gsap.timeline().fromTo(destination.item, {y:"-100vh",opacity: 0}, {y:"0",opacity: 1, duration: duration*2});
-    }
-    // end of first section
-
     // animate all the content
-    var tl = gsap.timeline();        
+    var tl = gsap.timeline();
     tl.fromTo(rightHalfOrigin, {opacity: 1}, {x:"100",opacity: 0, duration: duration});
     tl.fromTo(rightHalfDestination, {x:"100",opacity: 0}, {x:"0",opacity: 1, duration: duration});
 
