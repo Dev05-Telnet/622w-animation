@@ -4,17 +4,17 @@
 
 // get image url for the section with frame index
 const getImageUrl = (section, index) => {
-  if (section <= 0 || section == 4) return `./images/Sequence_01/sh_010.00001.png`;
+  if (section <= 0 || section == 4) return `https://oodygras.sirv.com/622w/images/Sequence_01/sh_010.00001.png`;
   if (section > 4) section = section - 1
 
-  return `./images/Sequence_${section.toString().padStart(2, "0")}/sh_${section
+  return `https://oodygras.sirv.com/622w/images/Sequence_${section.toString().padStart(2, "0")}/sh_${section
       .toString()
       .padStart(2, "0")}0.${index.toString().padStart(5, "0")}.png`;
 }
 
 
 // Preload the images
-for (let s = 1; s <= 7; s++) {
+for (let s = 1; s <= 2; s++) {
   for (let i = 1; i <= 30; i++) {
     const img = new Image();
     img.src = getImageUrl(s, i);
@@ -102,7 +102,7 @@ function animateInterSection(originIndex, destinationIndex, direction) {
  */
 new fullpage("#fullpage", {
   touchWrapper: document,
-  sectionsColor:['#52afef','#349234','red','blue','green','cyan','magenta','#52afef','#349234','red','blue','green','cyan','magenta','#52afef','#349234','red','blue','green','cyan','magenta',],
+  sectionsColor: ['#52afef', '#349234', 'red', 'blue', 'green', 'cyan', 'magenta', '#52afef', '#349234', 'red', 'blue', 'green', 'cyan', 'magenta', '#52afef', '#349234', 'red', 'blue', 'green', 'cyan', 'magenta', ],
   scrollingSpeed: scrollingSpeed,
   // easingcss3: "steps(2, jump-none)", //"linear",
   offsetSections: true,
@@ -121,6 +121,13 @@ new fullpage("#fullpage", {
   },
   onLeave: (origin, destination, direction) => {
     animateInterSection(origin.index + 1, destination.index + 1, direction);
+    // Preload the images of next section
+    if (direction === "down") {
+      for (let i = 1; i <= 30; i++) {
+        const img = new Image();
+        img.src = getImageUrl(destination.index + 2, i);
+      }
+    }
 
     // Animate the content
     const leftHalfOrigin = $("#leftHalf", origin.item)[0];
